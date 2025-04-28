@@ -11,15 +11,23 @@
  */
 class Solution {
     public:
-        bool isSameTree(TreeNode* p, TreeNode* q) {
-            if (p == nullptr && q == nullptr)
+        bool verify(TreeNode* left, TreeNode* right) {
+            if (left == nullptr && right == nullptr)
                 return true;
-            if (p == nullptr || q == nullptr)
-                return false;
-            if (p->val != q->val)
+            
+            if (left == nullptr || right == nullptr)
                 return false;
             
-            return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+            if (left->val != right->val)
+                return false;
+            
+            return verify(left->left, right->right) && verify(left->right, right->left);
+        }
+    
+        bool isSymmetric(TreeNode* root) {
+            if (root == nullptr)
+                return true;
+            
+            return verify(root->left, root->right);
         }
     };
-    

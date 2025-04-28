@@ -11,22 +11,27 @@
  */
 class Solution {
     public:
-        bool calculateSum(TreeNode* root, int targetSum, int currentSum) {
-            if (root == NULL)
+        bool validPath(TreeNode* root, int curSum, int targetSum) {
+            if (root == nullptr)
                 return false;
             
-            currentSum += root->val;
-            if (currentSum == targetSum && root->left == NULL && root->right == NULL)
+            if (root->left == nullptr && root->right == nullptr && curSum + root->val == targetSum)
                 return true;
             
-            return calculateSum(root->left, targetSum, currentSum) || calculateSum(root->right, targetSum, currentSum);
+            if (validPath(root->left, curSum + root->val, targetSum))
+                return true;
+    
+            if (validPath(root->right, curSum + root->val, targetSum))
+                return true;
+            
+            return false;
         }
     
         bool hasPathSum(TreeNode* root, int targetSum) {
-            if (root == NULL)
+            if (root == nullptr)
                 return false;
-    
-            return calculateSum(root, targetSum, 0);
+            
+            return validPath(root, 0, targetSum);
         }
     };
     
